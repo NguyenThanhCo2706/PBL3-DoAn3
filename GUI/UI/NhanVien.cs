@@ -160,8 +160,10 @@ namespace GUI
         private void Xoa_Click(object sender, EventArgs e)
         {
             DataGridViewSelectedRowCollection r = dataGridView2.SelectedRows;
-            int stt = dataGridView2.CurrentRow.Index;
-            list.RemoveAt(stt);
+            foreach(DataGridViewRow i in r)
+            {
+                list.RemoveAt(i.Index); 
+            }
             setData2();
         }
 
@@ -196,6 +198,11 @@ namespace GUI
             SDT.Enabled = true;
             MaDonBan.Enabled = true;
             checkKhachHang = false;
+            MaDonBan.Text = "";
+            SDT.Text = "";
+            HoTen.Text = "";
+            cbbMaSach.SelectedIndex = 0;
+            numericUpDown1.Value = 0;
             setData1();
         }
         private void Thoat_Click(object sender, EventArgs e)
@@ -211,7 +218,14 @@ namespace GUI
                 {
                     checkKhachHang = true;
                     HoTen.Text = BLL_QuanLy.Instance.Bll_GetKHBySDT(SDT.Text);
+                    HoTen.Enabled = false;
                     return;
+                }
+                else
+                {
+                    checkKhachHang = false;
+                    HoTen.Text = "";
+                    HoTen.Enabled = true;
                 }
             }
         }
